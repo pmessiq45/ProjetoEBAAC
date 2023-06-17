@@ -1,34 +1,35 @@
-import React, {useRef, useState} from 'react'
-import VideoFooter from "./components/footer/VideoFooter"
-import "./Video.css"
+import React, { useRef, useState } from "react";
+import VideoFooter from "./components/footer/VideoFooter";
+import VideoSideBar from "./components/sidebar/VideoSideBar";
+import "./Video.css";
 
-function Video() {
-    const videoRef = useRef(null);
-    const [play, setPlay] = useState(false);
-  
-    function handleStart() {
-      if (play) {
-        videoRef.current.play();
-        setPlay(true);
-      } else {
-        videoRef.current.play();
-        setPlay(false);
-      }
+function Video({ likes, messages, shares, name, description, music, url }) {
+  const videoRef = useRef(null);
+  const [play, setPlay] = useState(false);
+
+  function handleStart() {
+    if (play) {
+      videoRef.current.pause();
+      setPlay(false);
+    } else {
+      videoRef.current.play();
+      setPlay(true);
     }
-  
-    return (
-      <div className="video">
-        <video
-          className="video__player"
-          ref={videoRef}
-          onClick={handleStart}
-          loop
-          src="https://poqlymuephttfsljdabn.supabase.co/storage/v1/object/public/jornadadev/brecker2.mp4?t=2023-05-22T19%3A37%3A45.885Z"
-        ></video>
-        {/* Side bar */}
-        <VideoFooter />
-      </div>
-    );
   }
 
-export default Video
+  return (
+    <div className="video">
+      <video
+        className="video__player"
+        ref={videoRef}
+        onClick={handleStart}
+        loop
+        src={url}
+      ></video>
+      <VideoSideBar likes={likes} messages={messages} shares={shares} />
+      <VideoFooter name={name} description={description} music={music} />
+    </div>
+  );
+}
+
+export default Video;
